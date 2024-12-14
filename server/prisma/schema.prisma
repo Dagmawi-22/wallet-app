@@ -33,13 +33,16 @@ model Account {
   updatedAt DateTime @updatedAt
   deletedAt DateTime?
   transactions Transaction[]
+  destinationTransactions Transaction[] @relation("Destination")
 }
 
 model Transaction {
   id        Int              @id @default(autoincrement())
   amount    Float
   accountId Int
+  destinationId Int?
   account   Account          @relation(fields: [accountId], references: [id])
+  destination Account? @relation(name: "Destination", fields: [destinationId], references: [id])
   type      TransactionType
   createdAt DateTime         @default(now())
   updatedAt DateTime         @updatedAt

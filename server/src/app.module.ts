@@ -6,6 +6,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './auth/jwt.strategy';
 import { UserService } from './user/user.service';
 import { ConfigModule } from '@nestjs/config';
+import { TransactionModule } from './transaction/transaction.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { ConfigModule } from '@nestjs/config';
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '1h' },
     }),
+    TransactionModule,
   ],
   providers: [PrismaService, JwtStrategy, UserService],
 })
