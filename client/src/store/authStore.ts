@@ -1,14 +1,22 @@
-import { atom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
 interface User {
   id: string;
   username: string;
   fullName: string;
-  balance: number;
+  account: {
+    balance: number;
+  };
 }
 
-export const userAtom = atomWithStorage<User | null>("user", null);
-export const isAuthenticatedAtom = atom<boolean>(
-  (get) => get(userAtom) !== null
-);
+interface AuthState {
+  access_token: string | null;
+  user: User | null;
+}
+
+export const isValidAuthState = (state: AuthState | null): boolean => {
+  if (!state) return false;
+  return !!(state.access_token && state.user?.id);
+};
+
+export const userAtom = atomWithStorage<AuthState | null>("auth", null);

@@ -1,41 +1,41 @@
 import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import api from "../utils/axios.instance";
+import { useAtom } from "jotai";
+import { userAtom } from "../../store/authStore";
+import createApiInstance from "../../utils/axios.instance";
 
 interface LoginValues {
   username: string;
   password: string;
-  remember: boolean;
 }
 
 const LoginSchema = Yup.object().shape({
-  username: Yup.string()
-    .required("username is required"),
+  username: Yup.string().required("username is required"),
   password: Yup.string()
-    .min(6, "Password must be at least 6 characters")
+    .min(8, "Password must be at least 8 characters")
     .required("Password is required"),
-  remember: Yup.boolean(),
 });
 
 const Login = () => {
   const navigate = useNavigate();
 
+  const [_, setUser] = useAtom(userAtom);
+
+  const api = createApiInstance({});
+
   const formik = useFormik<LoginValues>({
     initialValues: {
       username: "",
       password: "",
-      remember: false,
     },
     validationSchema: LoginSchema,
     onSubmit: async (values, { setSubmitting, setStatus }) => {
       try {
         const response = await api.post("/auth/login", values);
-
-        if (response.data.token) {
-          localStorage.setItem("token", response.data.token);
-          navigate("/dashboard");
-        }
+        const { data } = response;
+        setUser(data);
+        navigate("/transactions");
       } catch (error: any) {
         setStatus(error.response?.data?.message || "An error occurred");
       } finally {
@@ -130,10 +130,7 @@ const Login = () => {
                 Remember me
               </label>
             </div>
-            <Link
-              to="/forgot-password"
-              className="text-sm text-blue-400 hover:text-blue-300"
-            >
+            <Link to="#" className="text-sm text-blue-400 hover:text-blue-300">
               Forgot password?
             </Link>
           </div>
@@ -155,7 +152,9 @@ const Login = () => {
         </p>
       </div>
     </div>
+    
   );
+  
 };
 
 export default Login;

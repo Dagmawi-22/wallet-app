@@ -1,7 +1,9 @@
 import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import api from "../utils/axios.instance";
+import { useAtom } from "jotai";
+import { userAtom } from "../../store/authStore";
+import createApiInstance from "../../utils/axios.instance";
 
 interface RegisterValues {
   fullName: string;
@@ -15,12 +17,15 @@ const RegisterSchema = Yup.object().shape({
     .min(2, "Full name must be at least 2 characters"),
   username: Yup.string().required("Username is required"),
   password: Yup.string()
-    .min(6, "Password must be at least 6 characters")
+    .min(8, "Password must be at least 8 characters")
     .required("Password is required"),
 });
 
 const Register = () => {
   const navigate = useNavigate();
+  const [_, setUser] = useAtom(userAtom);
+
+  const api = createApiInstance({ token: "" });
 
   const formik = useFormik<RegisterValues>({
     initialValues: {
@@ -32,9 +37,9 @@ const Register = () => {
     onSubmit: async (values, { setSubmitting, setStatus }) => {
       try {
         const response = await api.post("/auth/register", values);
-        if (response.data.success) {
-          navigate("/login");
-        }
+        const { data } = response;
+        setUser(data);
+        navigate("/transactions");
       } catch (error: any) {
         setStatus(error.response?.data?.message || "An error occurred");
       } finally {
