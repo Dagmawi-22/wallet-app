@@ -16,6 +16,12 @@ async function bootstrap() {
     }),
   );
 
+   app.enableCors({
+     origin: '*',
+     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+     credentials: true,
+   });
+
   app.setGlobalPrefix('api/v1');
 
   const configService = app.get(ConfigService);
