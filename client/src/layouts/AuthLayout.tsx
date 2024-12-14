@@ -1,4 +1,4 @@
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import {
   RiAddLine,
   RiSubtractLine,
@@ -6,19 +6,32 @@ import {
   RiMenuLine,
   RiCloseLine,
   RiExchangeLine,
+  RiLogoutBoxLine,
 } from "react-icons/ri";
 
 import { useState } from "react";
-import WithdrawModal from "../components/WithdrawalModal"
+import WithdrawModal from "../components/WithdrawalModal";
 import DepositModal from "../components/DepositModal";
 import TransferModal from "../components/TransferModal";
+import { useAtom } from "jotai";
+import { userAtom } from "../store/authStore";
 
 const AuthLayout: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [_, setUser] = useAtom(userAtom);
+  const navigate = useNavigate()
 
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
   const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
+
+  const handleLogout = () => {
+    setUser({
+      access_token: null,
+      user: null,
+    });
+    navigate('/login')
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50">
@@ -32,7 +45,7 @@ const AuthLayout: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             <div className="flex items-center">
-              <Link to="/dashboard" className="flex items-center">
+              <Link to="/transactions" className="flex items-center">
                 <span className="text-xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
                   WalletApp
                 </span>
@@ -82,6 +95,16 @@ const AuthLayout: React.FC = () => {
                 Transfer
               </button>
             </div>
+            <div className="hidden md:flex space-x-1">
+              {/* ... existing menu items ... */}
+              <button
+                onClick={handleLogout}
+                className="text-gray-700 hover:bg-red-500 hover:text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-150 ease-in-out flex items-center"
+              >
+                <RiLogoutBoxLine className="w-4 h-4 mr-2" />
+                Logout
+              </button>
+            </div>
           </div>
 
           <div
@@ -116,6 +139,13 @@ const AuthLayout: React.FC = () => {
             >
               <RiExchangeLine className="w-4 h-4 mr-2" />
               Transfer
+            </button>
+            <button
+              onClick={handleLogout}
+              className="text-gray-700 hover:bg-red-500 hover:text-white px-4 py-2 rounded-md text-sm font-medium transition-all duration-150 ease-in-out flex items-center w-full"
+            >
+              <RiLogoutBoxLine className="w-4 h-4 mr-2" />
+              Logout
             </button>
           </div>
         </div>
