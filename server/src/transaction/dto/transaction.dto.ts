@@ -13,14 +13,6 @@ export class DepositDto {
   })
   amount: number;
 
-  @IsInt()
-  @IsPositive()
-  @ApiProperty({
-    description: 'ID of the account to deposit into',
-    example: 1,
-    type: Number,
-  })
-  accountId: number;
 }
 
 export class WithdrawDto extends DepositDto {
@@ -32,12 +24,6 @@ export class WithdrawDto extends DepositDto {
   })
   amount: number;
 
-  @ApiProperty({
-    description: 'ID of the account to withdraw from',
-    example: 1,
-    type: Number,
-  })
-  accountId: number;
 }
 
 export class TransferDto {

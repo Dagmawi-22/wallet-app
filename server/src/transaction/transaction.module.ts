@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { TransactionController } from './transaction.controller';
-import { TransactionService } from './transaction.service';
+import { TransactionController } from './controller/transaction.controller';
+import { TransactionService } from './service/transaction.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from 'src/user/user.service';
