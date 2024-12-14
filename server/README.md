@@ -1,62 +1,113 @@
-# NestJS Typescript template for Cyclic
+I'll help you create a comprehensive README.md file that explains the project structure and modules. Here's a well-structured README:
 
-[![Deploy to Cyclic](https://deploy.cyclic.app/button.svg)](https://deploy.cyclic.app/)
+```markdown:README.md
+# Project Name
 
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+Brief description of your project - what it does and its main purpose.
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-  
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-   
-## Description
+## 📋 Table of Contents
+- [Features](#features)
+- [Project Structure](#project-structure)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [API Documentation](#api-documentation)
+- [Contributing](#contributing)
+- [License](#license)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## ✨ Features
+- Feature 1
+- Feature 2
+- Feature 3
 
-## Installation
-
-```bash
-$ npm install
+## 🗂 Project Structure
+```
+project-root/
+├── src/                    # Source code files
+│   ├── components/         # Reusable UI components
+│   ├── pages/             # Page components/routes
+│   ├── services/          # API services and business logic
+│   ├── utils/             # Helper functions and utilities
+│   └── config/            # Configuration files
+├── public/                # Static files
+├── tests/                 # Test files
+└── docs/                  # Documentation
 ```
 
-## Running the app
+## 📦 Modules Explanation
+
+### Components
+Contains reusable UI components that are shared across different pages. Each component should be self-contained with its own styles and tests.
+
+### Pages
+Page-level components that correspond to different routes in the application. Each page can compose multiple components.
+
+### Services
+Contains business logic, API calls, and data management. Separates data handling from UI components.
+
+### Utils
+Helper functions, constants, and utility classes used throughout the application.
+
+## 🚀 Installation
 
 ```bash
-# development - watch mode
-$ npm run start:dev
+# Clone the repository
+git clone https://github.com/username/project-name.git
 
-# development - debug & watch mode
-$ npm run start:debug
-
-# production mode
-$ npm run start
+# Install dependencies
+npm install
 ```
 
-## Test
+## 💻 Usage
 
 ```bash
-# unit tests
-$ npm run test
+# Start development server
+npm run dev
 
-# e2e tests
-$ npm run test:e2e
+# Build for production
+npm run build
 
-# test coverage
-$ npm run test:cov
+# Run tests
+npm test
 ```
 
-## Support
+## ⚙️ Configuration
+Explain any configuration files and environment variables needed.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+```env
+API_KEY=your_api_key
+DATABASE_URL=your_database_url
+```
 
-## Stay in touch
+## 📚 API Documentation
+Describe your API endpoints or link to API documentation.
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## 🤝 Contributing
+1. Fork the repository
+2. Create a new branch
+3. Make your changes
+4. Submit a pull request
 
-## License
+## 📄 License
+This project is licensed under the [MIT License](LICENSE).
+```
 
-  Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This README template:
+1. Starts with a clear project description
+2. Uses emojis for better visual organization
+3. Includes a detailed project structure explanation
+4. Provides clear installation and usage instructions
+5. Explains each module's purpose
+6. Includes sections for configuration and API documentation
+7. Has contributing guidelines
+8. Uses proper markdown formatting for code blocks and directory structures
+
+You can customize each section based on your specific project needs. The folder structure shown is a common organization pattern, but you can modify it to match your actual project structure.
+
+Remember to:
+- Keep the documentation up-to-date
+- Use clear and concise language
+- Include all necessary steps for setup
+- Document any prerequisites
+- Add badges if relevant (build status, version, etc.)
+- Include contact information if needed
