@@ -1,0 +1,47 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum TransactionType {
+  DEPOSIT
+  WITHDRAWAL
+  TRANSFER
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  fullName  String
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  account   Account?
+}
+
+model Account {
+  id        Int      @id @default(autoincrement())
+  balance   Float
+  userId    Int      @unique
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  transactions Transaction[]
+}
+
+model Transaction {
+  id        Int              @id @default(autoincrement())
+  amount    Float
+  accountId Int
+  account   Account          @relation(fields: [accountId], references: [id])
+  type      TransactionType
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  deletedAt DateTime?
+}
