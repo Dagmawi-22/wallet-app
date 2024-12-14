@@ -1,35 +1,65 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import AuthLayout from "./layouts/AuthLayout";
+import GuestLayout from "./layouts/GuestLayout";
+import Login from "./pages/guest/Login";
+import Register from "./pages/guest/Register";
+import Transactions from "./pages/protected/Transactions";
+import { useAtom } from "jotai";
+import { isValidAuthState, userAtom } from "./store/authStore";
+import { Toaster } from "react-hot-toast";
 
-function App() {
-  const [count, setCount] = useState(0)
+
+const queryClient = new QueryClient();
+
+const App: React.FC = () => {
+  const [user] = useAtom(userAtom);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <QueryClientProvider client={queryClient}>
+      <Toaster position="top-right" />
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              user && isValidAuthState(user) ? (
+                <Navigate to="/transactions" />
+              ) : (
+                <Navigate to="/login" />
+              )
+            }
+          />
+          <Route element={<GuestLayout />}>
+            <Route
+              path="/login"
+              element={
+                user && isValidAuthState(user) ? (
+                  <Navigate to="/transactions" />
+                ) : (
+                  <Login />
+                )
+              }
+            />
+            <Route
+              path="/register"
+              element={
+                user && isValidAuthState(user) ? (
+                  <Navigate to="/transactions" />
+                ) : (
+                  <Register />
+                )
+              }
+            />
+          </Route>
 
-export default App
+          <Route element={<AuthLayout />}>
+            <Route path="/transactions" element={<Transactions />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </QueryClientProvider>
+  );
+};
+
+export default App;
