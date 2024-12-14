@@ -5,19 +5,20 @@ import { format } from "date-fns";
 import { useAtom } from "jotai";
 import { userAtom } from "../../store/authStore";
 import createApiInstance from "../../utils/axios.instance";
-import { Card } from "../../components/Card"
+import { Card } from "../../components/Card";
 import { Transaction } from "@/types/types";
-
 
 const Transactions = () => {
   const [user] = useAtom(userAtom);
   const observerTarget = useRef(null);
 
-  const api = createApiInstance({ token: user?.access_token as string });
-
   const { data, fetchNextPage, hasNextPage, isLoading } = useInfiniteQuery({
     queryKey: ["transactions"],
     queryFn: async ({ pageParam = 1 }) => {
+      if (!user?.access_token) {
+        throw new Error("User not authenticated");
+      }
+      const api = createApiInstance({ token: user.access_token });
       const { data } = await api.get(`/transactions`, {
         params: { page: pageParam },
       });
@@ -30,6 +31,7 @@ const Transactions = () => {
       }
       return undefined;
     },
+    enabled: !!user?.access_token, 
   });
 
   useEffect(() => {
@@ -54,7 +56,7 @@ const Transactions = () => {
       <Card
         balance={user?.user?.account?.balance as number}
         fullName={user?.user?.fullName as string}
-        cardNumber="2222" 
+        cardNumber="2222"
       />
 
       <div className="space-y-4">
