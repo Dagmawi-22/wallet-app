@@ -113,7 +113,7 @@ const Transactions = () => {
                         <p className="text-sm text-gray-500">
                           {format(
                             new Date(transaction.createdAt),
-                            "MMM dd, yyyy"
+                            "MMM dd, yyyy HH:mm a"
                           )}
                         </p>
                       </div>

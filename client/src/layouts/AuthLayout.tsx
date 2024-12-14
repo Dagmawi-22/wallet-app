@@ -158,18 +158,9 @@ const AuthLayout: React.FC = () => {
           </div>
         </div>
       </main>
-      <WithdrawModal
-        isOpen={isWithdrawModalOpen}
-        onClose={() => setIsWithdrawModalOpen(false)}
-      />
-      <DepositModal
-        isOpen={isDepositModalOpen}
-        onClose={() => setIsDepositModalOpen(false)}
-      />
-      <TransferModal
-        isOpen={isTransferModalOpen}
-        onClose={() => setIsTransferModalOpen(false)}
-      />
+      <WithdrawModal isOpen={isWithdrawModalOpen} onClose={() => navigate(0)} />
+      <DepositModal isOpen={isDepositModalOpen} onClose={() => navigate(0)} />
+      <TransferModal isOpen={isTransferModalOpen} onClose={() => navigate(0)} />
     </div>
   );
 };
