@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AuthLayout from "./layouts/AuthLayout";
 import GuestLayout from "./layouts/GuestLayout";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 const App: React.FC = () => {
   return (
@@ -10,7 +11,7 @@ const App: React.FC = () => {
         {/* Guest routes */}
         <Route element={<GuestLayout />}>
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<div>Register Page</div>} />
+          <Route path="/register" element={<Register />} />
         </Route>
 
         {/* Protected routes */}

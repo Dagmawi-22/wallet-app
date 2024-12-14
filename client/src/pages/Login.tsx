@@ -4,15 +4,14 @@ import * as Yup from "yup";
 import api from "../utils/axios.instance";
 
 interface LoginValues {
-  email: string;
+  username: string;
   password: string;
   remember: boolean;
 }
 
 const LoginSchema = Yup.object().shape({
-  email: Yup.string()
-    .email("Invalid email address")
-    .required("Email is required"),
+  username: Yup.string()
+    .required("username is required"),
   password: Yup.string()
     .min(6, "Password must be at least 6 characters")
     .required("Password is required"),
@@ -24,7 +23,7 @@ const Login = () => {
 
   const formik = useFormik<LoginValues>({
     initialValues: {
-      email: "",
+      username: "",
       password: "",
       remember: false,
     },
@@ -77,21 +76,20 @@ const Login = () => {
         <form onSubmit={formik.handleSubmit} className="space-y-6">
           <div>
             <label
-              htmlFor="email"
+              htmlFor="username"
               className="block text-sm font-medium text-gray-300 mb-2"
             >
-              Email Address
+              Username
             </label>
             <input
-              id="email"
-              type="email"
-              {...formik.getFieldProps("email")}
+              id="username"
+              {...formik.getFieldProps("username")}
               className="w-full px-4 py-3 rounded-lg bg-gray-800/50 border border-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200"
-              placeholder="Enter your email"
+              placeholder="Enter your username"
             />
-            {formik.touched.email && formik.errors.email && (
+            {formik.touched.username && formik.errors.username && (
               <div className="mt-1 text-sm text-red-400">
-                {formik.errors.email}
+                {formik.errors.username}
               </div>
             )}
           </div>
