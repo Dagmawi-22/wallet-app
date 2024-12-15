@@ -1,6 +1,7 @@
 # wallet-app
 
 https://github.com/user-attachments/assets/c9cc2f83-b3a9-4868-af58-8df392c927cf
+
 https://github.com/user-attachments/assets/d46085d5-5c50-4ea5-b54a-e9e704e96f7d
 
 #### A simple React.js, Tailwind Css, Nest.js, Prisma, PostgreSql app with a wallet management features including: creating an account & depositing, withdrawing and transfering funds to peers.
