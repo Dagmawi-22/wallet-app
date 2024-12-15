@@ -31,8 +31,12 @@ const Login = () => {
     },
     validationSchema: LoginSchema,
     onSubmit: async (values, { setSubmitting, setStatus }) => {
+       const payload = {
+         username: values.username,
+         password: values.password,
+       };
       try {
-        const response = await api.post("/auth/login", values);
+        const response = await api.post("/auth/login", payload);
         const { data } = response;
         setUser(data);
         navigate("/transactions");
