@@ -17,7 +17,6 @@ export class TransactionService {
     user: User & { account: { id: number } };
   }) {
     const accountId = user.account.id;
-    console.log('accountId', accountId);
     const [transactions, total] = await Promise.all([
       this.prisma.transaction.findMany({
         skip: (page - 1) * limit,
@@ -72,14 +71,17 @@ export class TransactionService {
         },
       });
 
-      await tx.account.update({
+      const updatedAccount = await tx.account.update({
         where: { id: accountId },
         data: {
           balance: { increment: amount },
         },
       });
 
-      return transaction;
+      return {
+        ...transaction,
+        new_balance: updatedAccount.balance,
+      };
     });
   }
 
@@ -110,14 +112,17 @@ export class TransactionService {
         },
       });
 
-      await tx.account.update({
+      const updatedAccount = await tx.account.update({
         where: { id: accountId },
         data: {
           balance: { decrement: amount },
         },
       });
 
-      return transaction;
+      return {
+        ...transaction,
+        new_balance: updatedAccount.balance,
+      };
     });
   }
 
@@ -162,7 +167,7 @@ export class TransactionService {
         },
       });
 
-      await Promise.all([
+      const [updatedSourceAccount] = await Promise.all([
         tx.account.update({
           where: { id: accountId },
           data: {
@@ -177,7 +182,10 @@ export class TransactionService {
         }),
       ]);
 
-      return transaction;
+      return {
+        ...transaction,
+        new_balance: updatedSourceAccount.balance,
+      };
     });
   }
 }

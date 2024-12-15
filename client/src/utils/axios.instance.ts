@@ -34,13 +34,12 @@ const createApiInstance = ({ token }: CreateApiInstanceProps = {}) => {
     (response) => response,
     (error) => {
       if (error.response?.status === 401) {
-        localStorage.removeItem("token");
-        // window.location.href = "/login";
+        localStorage.clear();
+        window.location.href = "/login";
       }
       return Promise.reject(error);
     }
   );
-  console.log("tokkkkkkkk", token)
 
   return api;
 };

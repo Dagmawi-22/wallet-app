@@ -18,8 +18,8 @@ const WithdrawModal: React.FC<WithdrawalModalProps> = ({ isOpen, onClose }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     try {
       e.preventDefault();
-      await api.post(`/transactions/withdraw`, { amount: +amount });
-      setAmount("");
+      const res = await api.post(`/transactions/withdraw`, { amount: +amount });
+      console.log("resssss", res)
       onClose();
     } catch (e) {
       toast.error((e as any)?.response?.data?.message || "An error occurred");

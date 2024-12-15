@@ -18,12 +18,34 @@ import { userAtom } from "../store/authStore";
 
 const AuthLayout: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [_, setUser] = useAtom(userAtom);
+  const [user, setUser] = useAtom(userAtom);
   const navigate = useNavigate()
 
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
   const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
+
+  const handleReload = (
+    transaction: "deposit" | "withdrawal" | "transfer",
+    amount: number
+  ) => {
+    if (user && user.user && user.user.account) {
+      const updatedUser = {
+        ...user,
+        user: {
+          ...user.user,
+          account: {
+            ...user.user.account,
+            balance:
+              user.user.account.balance +
+              (transaction === "withdrawal" ? -amount : amount),
+          },
+        },
+      };
+
+      setUser(updatedUser);
+    }
+  };
 
   const handleLogout = () => {
     setUser({
@@ -158,9 +180,9 @@ const AuthLayout: React.FC = () => {
           </div>
         </div>
       </main>
-      <WithdrawModal isOpen={isWithdrawModalOpen} onClose={() => navigate(0)} />
-      <DepositModal isOpen={isDepositModalOpen} onClose={() => navigate(0)} />
-      <TransferModal isOpen={isTransferModalOpen} onClose={() => navigate(0)} />
+      <WithdrawModal isOpen={isWithdrawModalOpen} onClose={() => handleReload('withdrawal')} />
+      <DepositModal isOpen={isDepositModalOpen} onClose={() => handleReload('deposit')} />
+      <TransferModal isOpen={isTransferModalOpen} onClose={() => handleReload('transfer')} />
     </div>
   );
 };

@@ -7,6 +7,7 @@ import { userAtom } from "../../store/authStore";
 import createApiInstance from "../../utils/axios.instance";
 import { Card } from "../../components/Card";
 import { Transaction } from "@/types/types";
+import { HiOutlineDocumentText } from "react-icons/hi";
 
 const Transactions = () => {
   const [user] = useAtom(userAtom);
@@ -31,7 +32,7 @@ const Transactions = () => {
       }
       return undefined;
     },
-    enabled: !!user?.access_token, 
+    enabled: !!user?.access_token,
   });
 
   useEffect(() => {
@@ -130,6 +131,17 @@ const Transactions = () => {
                     </p>
                   </motion.div>
                 ))}
+                {page.data.length < 1 && (
+                  <div className="flex flex-col items-center justify-center p-8 bg-white rounded-lg shadow-sm">
+                    <HiOutlineDocumentText className="w-16 h-16 text-gray-400 mb-4" />
+                    <p className="text-xl font-medium text-gray-600">
+                      No transactions found
+                    </p>
+                    <p className="text-gray-400 mt-2 text-center">
+                      Your transaction history will appear here
+                    </p>
+                  </div>
+                )}
               </div>
             ))}
             <div ref={observerTarget} className="h-4" />
