@@ -1,23 +1,40 @@
 # wallet-app
 
 #### A simple React.js, Tailwind Css, Nest.js, Prisma, PostgreSql app with a wallet management features including: creating an account & depositing, withdrawing and transfering funds to peers.
-![image](https://github.com/user-attachments/assets/aa1961b0-733c-4dd0-b497-e3a10bc55c38)
-![image](https://github.com/user-attachments/assets/bd37be4d-2239-4674-8ff7-828332cb032e)
-![image](https://github.com/user-attachments/assets/124f39a1-6eaa-458a-a492-4654dea67b7a)
-
-
-
 
 ### Tools used
 
-- React.js - for building the client side logic
-- Vite (14) - as a build tool for a seamless build and development experience
-- Tailwind Css - for a nice looking UI without a native css
-- headless-ui - for a good looking modal components
-- Nest.js - for handling the server logic
-- Prisma - for interacting with the PostgreSql database
-- PostgreSql - for storing data
-- Swagger - for documenting the Nest.js API
+#### Frontend
+##### React.js: Popular UI library for building component-based interfaces
+##### Vite: Modern build tool offering faster development and optimized builds
+##### Tailwind CSS: Utility-first CSS framework for rapid styling without writing custom CSS
+##### Headless UI: Accessible, unstyled components that integrate perfectly with Tailwind
+#### Backend
+##### Nest.js: TypeScript-based Node.js framework offering:
+Modular architecture
+Built-in testing support
+Easy API documentation
+Strong typing system
+Dependency injection
+Prisma: Modern ORM providing:
+Type-safe database queries
+Auto-generated types
+Easy schema management
+Database migrations
+PostgreSQL: Robust relational database with:
+ACID compliance
+JSON support
+Advanced querying capabilities
+Swagger: Automatic API documentation integrated with Nest.js for:
+Interactive API testing
+Clear endpoint documentation
+Request/response schema visualization
+##### Key Benefits
+Full-stack TypeScript support
+Excellent developer experience
+Built-in testing capabilities
+Automatic API documentation
+Scalable and maintainable architecture
 
 ### How to run the app locally
 
