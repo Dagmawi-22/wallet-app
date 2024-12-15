@@ -19,31 +19,30 @@ import { userAtom } from "../store/authStore";
 const AuthLayout: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [user, setUser] = useAtom(userAtom);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [isWithdrawModalOpen, setIsWithdrawModalOpen] = useState(false);
   const [isDepositModalOpen, setIsDepositModalOpen] = useState(false);
   const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
 
-  const handleReload = (
-    transaction: "deposit" | "withdrawal" | "transfer",
-    amount: number
-  ) => {
-    if (user && user.user && user.user.account) {
+  const handleReload = (new_balance: number) => {
+    if (user?.user?.account) {
+      if (new_balance === -1) {
+        navigate(0);
+        return;
+      }
       const updatedUser = {
         ...user,
         user: {
           ...user.user,
           account: {
             ...user.user.account,
-            balance:
-              user.user.account.balance +
-              (transaction === "withdrawal" ? -amount : amount),
+            balance: new_balance,
           },
         },
       };
-
       setUser(updatedUser);
+      navigate(0);
     }
   };
 
@@ -52,7 +51,7 @@ const AuthLayout: React.FC = () => {
       access_token: null,
       user: null,
     });
-    navigate('/login')
+    navigate("/login");
   };
 
   return (
@@ -180,9 +179,9 @@ const AuthLayout: React.FC = () => {
           </div>
         </div>
       </main>
-      <WithdrawModal isOpen={isWithdrawModalOpen} onClose={() => handleReload('withdrawal')} />
-      <DepositModal isOpen={isDepositModalOpen} onClose={() => handleReload('deposit')} />
-      <TransferModal isOpen={isTransferModalOpen} onClose={() => handleReload('transfer')} />
+      <WithdrawModal isOpen={isWithdrawModalOpen} onClose={handleReload} />
+      <DepositModal isOpen={isDepositModalOpen} onClose={handleReload} />
+      <TransferModal isOpen={isTransferModalOpen} onClose={handleReload} />
     </div>
   );
 };

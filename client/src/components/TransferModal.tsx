@@ -1,5 +1,5 @@
-import createApiInstance from "../utils/axios.instance"
-import { userAtom } from "../store/authStore"
+import createApiInstance from "../utils/axios.instance";
+import { userAtom } from "../store/authStore";
 import { Dialog, Transition } from "@headlessui/react";
 import { useAtom } from "jotai";
 import { Fragment, useState } from "react";
@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 
 interface TransferModalProps {
   isOpen: boolean;
-  onClose: () => void;
+  onClose: (new_balance: number) => void;
 }
 
 const TransferModal: React.FC<TransferModalProps> = ({ isOpen, onClose }) => {
@@ -18,23 +18,21 @@ const TransferModal: React.FC<TransferModalProps> = ({ isOpen, onClose }) => {
   const api = createApiInstance({ token: user?.access_token as string });
 
   const handleSubmit = async (e: React.FormEvent) => {
-   try {
-     e.preventDefault();
-     await api.post(`/transactions/transfer`, {
-       amount: +amount,
-       destinationAccountId: +accountId,
-     });
-     setAmount("");
-     onClose();
-   } catch (e) {
-     toast.error((e as any)?.response?.data?.message || "An error occurred");
-   }
+    try {
+      e.preventDefault();
+      const res = await api.post(`/transactions/transfer`, {
+        amount: +amount,
+        destinationAccountId: +accountId,
+      });
+      onClose(res?.data?.new_balance);
+    } catch (e) {
+      toast.error((e as any)?.response?.data?.message || "An error occurred");
+    }
   };
-  
 
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-50" onClose={onClose}>
+      <Dialog as="div" className="relative z-50" onClose={() => onClose(-1)}>
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
@@ -116,7 +114,7 @@ const TransferModal: React.FC<TransferModalProps> = ({ isOpen, onClose }) => {
                   <div className="mt-6 flex justify-end space-x-3">
                     <button
                       type="button"
-                      onClick={onClose}
+                      onClick={() => onClose(-1)}
                       className="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                     >
                       Cancel
