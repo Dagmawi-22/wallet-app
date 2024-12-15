@@ -11,24 +11,25 @@
 ##### Headless UI: Accessible, unstyled components that integrate perfectly with Tailwind
 #### Backend
 ##### Nest.js: TypeScript-based Node.js framework offering:
-Modular architecture
-Built-in testing support
-Easy API documentation
-Strong typing system
-Dependency injection
-Prisma: Modern ORM providing:
-Type-safe database queries
-Auto-generated types
-Easy schema management
-Database migrations
-PostgreSQL: Robust relational database with:
-ACID compliance
-JSON support
-Advanced querying capabilities
-Swagger: Automatic API documentation integrated with Nest.js for:
-Interactive API testing
-Clear endpoint documentation
-Request/response schema visualization
+- Modular architecture
+- Built-in testing support
+- Easy API documentation
+- Strong typing system
+- Dependency injection
+- Graceful handling of validation errors using Global Pipe
+##### Prisma: Modern ORM providing:
+- Type-safe database queries
+- Auto-generated types
+- Easy schema management
+##### Database migrations
+#### PostgreSQL: Robust relational database with:
+- ACID compliance
+- JSON support
+- Advanced querying capabilities
+##### Swagger: Automatic API documentation integrated with Nest.js for:
+- Interactive API testing
+- Clear endpoint documentation
+- Request/response schema visualization
 ##### Key Benefits
 Full-stack TypeScript support
 Excellent developer experience
